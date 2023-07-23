@@ -1,0 +1,145 @@
+<header class="header" id="header" #header>
+  <div class="header__container container">
+    <div class="header__logo-container">
+      <a href="javascript:void(0)" class="logo-link" (click)="scrollTo(header)"><img src="./assets/img/logo.svg" alt="Логотип" class="header__logo"></a>
+    </div>
+    <nav class="header__menu">
+      <ul class="header__menu-list">
+        <li class="header__menu-item">
+          <a (click)="scrollTo(why)" class="header__link">Почему у нас</a>
+        </li>
+        <li class="header__menu-item">
+          <a (click)="scrollTo(choose)" class="header__link">Меню бургеров</a>
+        </li>
+        <li class="header__menu-item">
+          <a (click)="scrollTo(order)" class="header__link">Оформление заказа</a>
+        </li>
+      </ul>
+    </nav>
+    <button class="header__currency" title="Изменить валюту" id="change-currency" (click)="changeCurrency()">
+      {{currency}}
+    </button>
+  </div>
+</header>
+
+<main class="main">
+  <section class="new-menu" id="new-menu">
+    <div class="main__container container">
+      <div class="main__info">
+        <span class="main__small-info">Новое меню</span>
+        <h1 class="main__title">Бургер Чеддер</h1>
+        <p class="main__text">Мы обновили наше меню, спешите попробовать сезонные новинки и насладиться отличным
+          вкусом наших бургеров. Готовим для вас лучшие бургеры в городе из отборной мраморной говядины.</p>
+        <div class="main__action">
+          <button class="main__btn btn" id="new-menu__btn" (click)="scrollTo(choose)"><span class="btn-text">Смотреть меню</span>
+          </button>
+        </div>
+      </div>
+      <img src="./assets/img/main_burger.png" alt="Большой Бургер Чеддер" class="main__image" [ngStyle]="mainImageStyle">
+    </div>
+  </section>
+  <section class="why" id="why" #why>
+    <div class="container why__container">
+      <h2 class="why__title title">Почему нас выбирают?</h2>
+      <div class="why__reasons-block">
+        <div class="why__reason">
+          <img src="./assets/img/reason1.png" alt="Burger" class="reason__image">
+          <h3 class="reason__title subtitle">Авторские рецепты</h3>
+          <p class="reason__text subtext">Наши бургеры обладают уникальным сочетанием вкусов и не похожи ни на
+            какие
+            другие. Мы тщательно отбираем лучшие ингредиенты и сочетания вкусов для нашего меню.</p>
+        </div>
+        <div class="why__reason">
+          <img src="./assets/img/reason2.png" alt="Meat" class="reason__image">
+          <h3 class="reason__title subtitle">Мраморная говядина</h3>
+          <p class="reason__text subtext">Для наших бургеров мы используем отборную 100% мраморную говядину,
+            которую
+            закупаем исключительно у фермеров. Мы уверены в качестве нашего мяса.</p>
+        </div>
+        <div class="why__reason">
+          <img src="./assets/img/reason3.png" alt="Food track" class="reason__image">
+          <h3 class="reason__title subtitle">Быстрая доставка</h3>
+          <p class="reason__text subtext">Мы доставляем в пределах МКАД за 30 минут, а если не успеем —
+            доставка
+            бесплатно. Мы тщательно упаковываем наши бургеры, чтобы по дороге они не остыли.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="choose" id="choose" #choose>
+    <div class="container choose-container">
+      <h2 class="choose__title title">Выберите свой бургер</h2>
+      <div class="burgers-container">
+        <div class="burger" (click)="scrollTo(order, product)" *ngFor="let product of productsData">
+          <div class="burger__image-box"><img src="{{product.image}}" alt="Burger" class="burger__image"></div>
+          <h3 class="burger__title subtitle">{{product.title}}</h3>
+          <p class="burger__text subtext">{{product.text}}</p>
+          <div class="info-button-container">
+            <div class="price-size-container">
+              <p class="burger__price">{{product.price}} {{currency}}</p>
+              <p class="burger__size">{{product.grams}} гр</p>
+            </div>
+            <button class="btn burger__btn"  (click)="scrollTo(order, product)">
+              <span class="btn-text">Заказать</span>
+              <img src="./assets/img/shopping-card.svg" alt="" class="order-icon">
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="order" id="order" #order>
+    <div class="container order__container">
+      <h2 class="title order__title">Оформление заказа</h2>
+      <div class="order__inner-container">
+        <div class="order__img-box">
+          <img src="./assets/img/food-delivery.png" alt="Доставка еды" class="order__image" [ngStyle]="orderImageStyle">
+        </div>
+        <form action="" class="order__form" id="order__form" [formGroup]="form">
+          <fieldset class="order__fields">
+            <legend class="order__legend">Заполните все данные и наш менеджер свяжется с вами для
+              подтверждения заказа
+            </legend>
+            <label for="order__input-order" class="order__label" [class]="{'error': form.get('order')?.invalid && (form.get('order')?.dirty || form.get('order')?.touched)}">
+              <input autocomplete="off" type="text" class="order__input" placeholder="Выберите товар в списке" id="order__input-order" formControlName="order" readonly>
+            </label>
+            <label for="order__input-name" class="order__label" [class]="{'error': form.get('name')?.invalid && (form.get('name')?.dirty || form.get('name')?.touched)}">
+              <input autocomplete="off" type="text" class="order__input" placeholder="Ваше имя" id="order__input-name" formControlName="name">
+            </label>
+            <label for="order__input-tel" class="order__label" [class]="{'error': form.get('phone')?.invalid && (form.get('phone')?.dirty || form.get('phone')?.touched)}">
+              <input autocomplete="off" type="tel" class="order__input" placeholder="Ваш телефон" id="order__input-tel" formControlName="phone">
+            </label>
+            <button class="btn order__btn" id="order-action" type="button" (click)="confirmOrder()" [disabled]="!form.valid">
+              <span class="btn-text">Оформить заказ</span>
+            </button>
+          </fieldset>
+        </form>
+        <dialog id="modal" class="order__modal">
+          <div class="modal-box">
+            <img src="./assets/img/reason3.png" alt="Food delivery" class="modal__image">
+            <div class="modal-text-box">
+              <h3 class="modal__title">Спасибо за заказ</h3>
+              <h3 class="modal__title">Мы скоро свяжемся с Вами!</h3>
+            </div>
+            <button class="modal-close-btn btn" type="button">
+              <span class="btn-text">Закрыть</span>
+            </button>
+          </div>
+        </dialog>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" id="footer">
+  <div class="container footer__container">
+    <div class="header__logo-container">
+      <a href="javascript:void(0)" class="logo-link" (click)="scrollTo(header)"><img src="./assets/img/logo.svg" alt="Логотип" class="header__logo"></a>
+    </div>
+    <p class="footer__text">Все права защищены</p>
+  </div>
+</footer>
+
+<div class="loader" [class]="{'showed': loaderShowed}" *ngIf="loader">
+  <lottie-player src="./assets/burger.json" bacground="transparent" speed="3" autoplay></lottie-player>
+</div>
