@@ -149,13 +149,21 @@ export class AppComponent {
     }
   }
 
+
+  closeDialog() {
+    const dialog = document.getElementById('modal') as HTMLDialogElement;
+    dialog.close();
+  }
+
   confirmOrder() {
     if (this.form.valid) {
       this.appService.sendOrder(this.form.value)
         .subscribe(
           {
             next: (response: any) => {
-              alert(response.message);
+              const dialog = document.getElementById('modal') as HTMLDialogElement;
+              dialog.showModal();
+
               this.form.reset();
             },
             error: (response) => {
@@ -165,6 +173,8 @@ export class AppComponent {
         )
     }
   }
+
+
 
   changeCurrency() {
     let newCurrency = "$";
